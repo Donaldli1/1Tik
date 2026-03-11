@@ -3,145 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيقات ذهبية DZ | عالم التطبيقات المعدلة</title>
+    <title>تطبيقات ذهبية DZ  </title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- 1. الإعدادات العامة (CSS Reset & Global) --- */
         :root {
-            --main-color: #ffc107; /* اللون الذهبي */
-            --dark-bg: #1a1a1a;
-            --card-bg: #2d2d2d;
-            --text-color: #ffffff;
-            --body-font: 'Tajawal', sans-serif;
+            --primary-color: #007bff; /* أزرق احترافي مثل واجهات أبو عرب */
+            --bg-color: #f4f7f6;
+            --text-dark: #333;
+            --white: #ffffff;
+            --gray: #666;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-color); color: var(--text-dark); }
+        
+        /* الترويسة */
+        header { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.4rem; font-weight: bold; color: var(--primary-color); }
+        nav ul { display: flex; gap: 15px; list-style: none; }
+        nav ul li a { text-decoration: none; color: var(--text-dark); font-weight: bold; font-size: 0.9rem; }
 
-        body {
-            font-family: var(--body-font);
-            background-color: var(--dark-bg);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
+        /* الأقسام الرئيسية */
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        
+        /* كرت التطبيق */
+        .app-card { background: var(--white); border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }
+        .app-card:hover { transform: translateY(-5px); }
+        .app-card img { width: 80px; height: 80px; border-radius: 18px; margin-bottom: 15px; }
+        .app-card h3 { font-size: 1.1rem; margin-bottom: 10px; }
+        .btn-download { display: inline-block; background: var(--primary-color); color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-size: 0.9rem; }
 
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
+        /* صفحة إعادة التوجيه (مخفية افتراضياً) */
+        #redirect-page { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--white); z-index: 1000; text-align: center; padding-top: 100px; }
+        #redirect-page img { width: 120px; border-radius: 20px; margin-bottom: 20px; }
+        .timer { font-size: 2rem; color: var(--primary-color); font-weight: bold; margin: 20px 0; }
 
-        /* --- 2. الترويسة (Header) --- */
-        header {
-            background-color: #000;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--main-color);
-        }
+        /* الصفحات الإضافية */
+        .page-content { background: var(--white); padding: 30px; border-radius: 12px; display: none; }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--main-color);
-        }
-
-        nav ul { display: flex; gap: 20px; }
-        nav ul li a:hover { color: var(--main-color); transition: 0.3s; }
-
-        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
-
-        /* --- 3. قسم الترحيب (Hero Section) --- */
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1200x400');
-            background-size: cover;
-        }
-
-        .hero h1 { font-size: 2.5rem; color: var(--main-color); margin-bottom: 10px; }
-        .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 20px; }
-
-        /* --- 4. شبكة التطبيقات (App Grid) --- */
-        .container { padding: 40px 5%; }
-        .section-title { margin-bottom: 30px; border-right: 5px solid var(--main-color); padding-right: 15px; }
-
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-        }
-
-        .app-card {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-            border: 1px solid #444;
-        }
-
-        .app-card:hover { transform: translateY(-10px); border-color: var(--main-color); }
-        .app-card img { width: 100%; height: 180px; object-fit: cover; }
-        .app-info { padding: 20px; }
-        .app-info h3 { margin-bottom: 10px; color: var(--main-color); }
-        .download-btn {
-            display: block;
-            background-color: var(--main-color);
-            color: #000;
-            text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
-        /* --- 5. قسم التقييم والتعليقات --- */
-        .comments-section {
-            background-color: #222;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 50px;
-        }
-
-        .rating { color: var(--main-color); font-size: 1.5rem; margin-bottom: 20px; }
-        .comment-form input, .comment-form textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            background: #333;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 5px;
-        }
-
-        .comment-form btn {
-            background: var(--main-color);
-            padding: 10px 25px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            border-radius: 5px;
-        }
-
-        /* --- 6. التذييل (Footer) --- */
-        footer {
-            background: #000;
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-            border-top: 1px solid #333;
-        }
-
-        /* --- استجابة الشاشات (Responsive) --- */
-        @media (max-width: 768px) {
-            nav ul { display: none; }
-            .menu-toggle { display: block; }
-            .hero h1 { font-size: 1.8rem; }
-        }
+        /* التذييل والروابط الاجتماعية */
+        footer { background: #fdfdfd; padding: 30px 0; text-align: center; border-top: 1px solid #eee; margin-top: 50px; }
+        .social-icons { margin-bottom: 15px; }
+        .social-icons a { font-size: 1.8rem; margin: 0 10px; transition: 0.3s; }
+        .fa-telegram { color: #0088cc; }
+        .fa-youtube { color: #ff0000; }
+        .tiktok-icon { color: #000; font-weight: bold; } /* تطبيق Tik1 */
+        
+        .footer-rights { font-size: 0.8rem; color: var(--gray); margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -150,73 +60,100 @@
         <div class="logo">تطبيقات ذهبية DZ</div>
         <nav>
             <ul>
-                <li><a href="#">الرئيسية</a></li>
-                <li><a href="#">أندرويد</a></li>
-                <li><a href="#">شروحات</a></li>
-                <li><a href="#">اتصل بنا</a></li>
+                <li><a href="#" onclick="showPage('home')">الرئيسية</a></li>
+                <li><a href="#" onclick="showPage('privacy')">سياسة الخصوصية</a></li>
+                <li><a href="#" onclick="showPage('contact')">اتصل بنا</a></li>
             </ul>
         </nav>
-        <div class="menu-toggle">☰</div>
     </header>
 
-    <section class="hero">
-        <h1>مرحباً بك في عالم التطبيقات الذهبية</h1>
-        <p>أفضل مستودع لتحميل التطبيقات المعدلة والبرامج الحصرية بروابط مباشرة مجاناً.</p>
-    </section>
-
-    <div class="container">
-        <h2 class="section-title">أحدث الإضافات</h2>
-        
-        <div class="app-grid">
-            <div class="app-card">
-                <img src="https://via.placeholder.com/300x200" alt="تطبيق">
-                <div class="app-info">
-                    <h3>واتساب الذهبي</h3>
-                    <p>آخر إصدار مع ميزات الخصوصية الكاملة وتغيير الثيمات.</p>
-                    <a href="#" class="download-btn">تحميل الآن</a>
-                </div>
+    <main id="home-page" class="container">
+        <div class="grid" id="app-list">
             </div>
+    </main>
 
-            <div class="app-card">
-                <img src="https://via.placeholder.com/300x200" alt="تطبيق">
-                <div class="app-info">
-                    <h3>تيك توك بلس</h3>
-                    <p>مشاهدة الفيديوهات بدون علامة مائية وبميزات إضافية.</p>
-                    <a href="#" class="download-btn">تحميل الآن</a>
-                </div>
-            </div>
+    <div id="privacy-page" class="container page-content">
+        <h2>سياسة الخصوصية</h2>
+        <p>هنا تضع نص سياسة الخصوصية الخاص بموقعك...</p>
+    </div>
 
-            <div class="app-card">
-                <img src="https://via.placeholder.com/300x200" alt="تطبيق">
-                <div class="app-info">
-                    <h3>إنستقرام برو</h3>
-                    <p>تحميل الصور والفيديوهات والقصص بضغطة زر واحدة.</p>
-                    <a href="#" class="download-btn">تحميل الآن</a>
-                </div>
-            </div>
-        </div>
+    <div id="contact-page" class="container page-content">
+        <h2>اتصل بنا</h2>
+        <p>يمكنك التواصل معنا عبر البريد الإلكتروني أو وسائل التواصل الاجتماعي.</p>
+    </div>
 
-        <div class="comments-section">
-            <h3 class="section-title">تقييمك يهمنا</h3>
-            <div class="rating">⭐⭐⭐⭐⭐</div>
-            <div class="comment-form">
-                <input type="text" placeholder="اسمك المستعار">
-                <textarea rows="4" placeholder="اترك تعليقك هنا..."></textarea>
-                <button class="download-btn" style="width: auto; border:none; cursor:pointer;">نشر التعليق</button>
-            </div>
-        </div>
+    <div id="redirect-page">
+        <img id="redir-img" src="" alt="App Icon">
+        <h2 id="redir-name">اسم التطبيق</h2>
+        <p>الرجاء الانتظار إلى غاية تحضير الرابط المباشر...</p>
+        <div class="timer" id="countdown">15</div>
+        <p>سيتم تحويلك تلقائياً</p>
     </div>
 
     <footer>
-        <p>جميع الحقوق محفوظة © تطبيقات ذهبية DZ - 2026</p>
-    </section>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-telegram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#" title="Tik1"><i class="fab fa-tiktok tiktok-icon"></i></a>
+        </div>
+        <div class="footer-rights">
+            All rights reserved Osama 40 / 2026
+        </div>
+    </footer>
 
     <script>
-        // تفاعل بسيط للقائمة في الجوال
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
-            alert('سيتم تفعيل القائمة المنزلقة قريباً!');
-        });
-    </script>
+        // بيانات التطبيقات - يمكنك تعديلها بسهولة من هنا
+        const apps = [
+            { id: 1, name: "واتساب الذهبي", img: "https://via.placeholder.com/80/FFD700", link: "https://mediafire.com/example1" },
+            { id: 2, name: "تويتر الذهبي", img: "https://via.placeholder.com/80/1DA1F2", link: "https://mediafire.com/example2" },
+            { id: 3, name: "انستقرام برو", img: "https://via.placeholder.com/80/E1306C", link: "https://mediafire.com/example3" },
+            { id: 4, name: "تيك توك بلس", img: "https://via.placeholder.com/80/000000", link: "https://mediafire.com/example4" },
+            { id: 5, name: "يوتيوب فينسد", img: "https://via.placeholder.com/80/FF0000", link: "https://mediafire.com/example5" },
+            { id: 6, name: "تلجرام المميز", img: "https://via.placeholder.com/80/0088cc", link: "https://mediafire.com/example6" },
+            { id: 7, name: "فيسبوك لايت معدل", img: "https://via.placeholder.com/80/4267B2", link: "https://mediafire.com/example7" },
+            { id: 8, name: "متجر تطبيقات ذهبي", img: "https://via.placeholder.com/80/34A853", link: "https://mediafire.com/example8" }
+        ];
 
+        // عرض التطبيقات في الصفحة
+        const appList = document.getElementById('app-list');
+        apps.forEach(app => {
+            appList.innerHTML += `
+                <div class="app-card">
+                    <img src="${app.img}" alt="${app.name}">
+                    <h3>${app.name}</h3>
+                    <a href="javascript:void(0)" class="btn-download" onclick="startRedirect('${app.name}', '${app.img}', '${app.link}')">تحميل الآن</a>
+                </div>
+            `;
+        });
+
+        // وظيفة التنقل بين الصفحات
+        function showPage(pageId) {
+            document.querySelectorAll('.container, .page-content').forEach(p => p.style.display = 'none');
+            document.getElementById('home-page').style.display = 'none';
+            
+            if(pageId === 'home') document.getElementById('home-page').style.display = 'block';
+            else document.getElementById(pageId + '-page').style.display = 'block';
+        }
+
+        // وظيفة العداد وإعادة التوجيه
+        function startRedirect(name, img, link) {
+            const redirPage = document.getElementById('redirect-page');
+            const countdownEl = document.getElementById('countdown');
+            document.getElementById('redir-img').src = img;
+            document.getElementById('redir-name').innerText = name;
+            
+            redirPage.style.display = 'block';
+            let timeLeft = 15;
+            
+            const timer = setInterval(() => {
+                timeLeft--;
+                countdownEl.innerText = timeLeft;
+                if(timeLeft <= 0) {
+                    clearInterval(timer);
+                    window.location.href = link; // التحويل للرابط
+                }
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
