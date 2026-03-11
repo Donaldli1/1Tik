@@ -3,98 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيقات ذهبية DZ  </title>
+    <title>تطبيقات ذهبية DZ</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #007bff; /* أزرق احترافي مثل واجهات أبو عرب */
-            --bg-color: #f4f7f6;
-            --text-dark: #333;
+            --primary-color: #007bff; 
+            --accent-color: #ffc107;
+            --bg-color: #f8f9fa;
             --white: #ffffff;
-            --gray: #666;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-color); color: var(--text-dark); }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-color); color: #333; overflow-x: hidden; }
+
+        /* ترويسة ثابتة واحترافية */
+        header { 
+            background: var(--white); 
+            padding: 15px; 
+            text-align: center; 
+            box-shadow: var(--shadow); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+        .logo { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); letter-spacing: 1px; }
+
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; min-height: 70vh; }
+
+        /* شبكة التطبيقات */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .app-card { 
+            background: var(--white); border-radius: 20px; padding: 20px; text-align: center; 
+            box-shadow: var(--shadow); transition: 0.3s; border: 1px solid #eee;
+        }
+        .app-card:hover { transform: translateY(-8px); border-color: var(--primary-color); }
+        .app-card img { width: 85px; height: 85px; border-radius: 20px; margin-bottom: 15px; object-fit: cover; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .app-card h3 { font-size: 1.1rem; margin-bottom: 15px; color: #444; }
+        .btn-download { 
+            display: inline-block; background: var(--primary-color); color: white; 
+            padding: 10px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 0.9rem;
+        }
+
+        /* صفحة إعادة التوجيه الاحترافية */
+        #redirect-container { 
+            display: none; text-align: center; background: var(--white); 
+            padding: 40px 20px; border-radius: 25px; box-shadow: var(--shadow); animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
-        /* الترويسة */
-        header { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 1.4rem; font-weight: bold; color: var(--primary-color); }
-        nav ul { display: flex; gap: 15px; list-style: none; }
-        nav ul li a { text-decoration: none; color: var(--text-dark); font-weight: bold; font-size: 0.9rem; }
-
-        /* الأقسام الرئيسية */
-        .container { max-width: 1100px; margin: 30px auto; padding: 0 15px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .loader-ring {
+            display: inline-block; width: 80px; height: 80px; border: 8px solid #f3f3f3;
+            border-top: 8px solid var(--primary-color); border-radius: 50%;
+            animation: spin 1s linear infinite; margin: 20px 0;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* كرت التطبيق */
-        .app-card { background: var(--white); border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }
-        .app-card:hover { transform: translateY(-5px); }
-        .app-card img { width: 80px; height: 80px; border-radius: 18px; margin-bottom: 15px; }
-        .app-card h3 { font-size: 1.1rem; margin-bottom: 10px; }
-        .btn-download { display: inline-block; background: var(--primary-color); color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-size: 0.9rem; }
-
-        /* صفحة إعادة التوجيه (مخفية افتراضياً) */
-        #redirect-page { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--white); z-index: 1000; text-align: center; padding-top: 100px; }
-        #redirect-page img { width: 120px; border-radius: 20px; margin-bottom: 20px; }
-        .timer { font-size: 2rem; color: var(--primary-color); font-weight: bold; margin: 20px 0; }
-
-        /* الصفحات الإضافية */
-        .page-content { background: var(--white); padding: 30px; border-radius: 12px; display: none; }
-
-        /* التذييل والروابط الاجتماعية */
-        footer { background: #fdfdfd; padding: 30px 0; text-align: center; border-top: 1px solid #eee; margin-top: 50px; }
-        .social-icons { margin-bottom: 15px; }
-        .social-icons a { font-size: 1.8rem; margin: 0 10px; transition: 0.3s; }
+        .timer-box { font-size: 2.5rem; font-weight: bold; color: var(--primary-color); margin: 10px 0; }
+        .waiting-text { font-size: 1.2rem; color: #666; margin-bottom: 20px; }
+        
+        /* التذييل */
+        footer { background: var(--white); padding: 40px 0 20px; text-align: center; border-top: 1px solid #eee; margin-top: 50px; }
+        .footer-nav { margin-bottom: 20px; }
+        .footer-nav a { margin: 0 15px; text-decoration: none; color: #666; font-weight: bold; }
+        .footer-nav a:hover { color: var(--primary-color); }
+        .social-icons { margin-bottom: 20px; }
+        .social-icons a { font-size: 1.8rem; margin: 0 12px; transition: 0.3s; }
+        .social-icons a:hover { transform: scale(1.2); }
         .fa-telegram { color: #0088cc; }
         .fa-youtube { color: #ff0000; }
-        .tiktok-icon { color: #000; font-weight: bold; } /* تطبيق Tik1 */
-        
-        .footer-rights { font-size: 0.8rem; color: var(--gray); margin-top: 10px; }
+        .fa-tiktok { color: #000; }
+        .footer-rights { font-size: 0.85rem; color: #999; margin-top: 15px; padding-top: 15px; border-top: 1px dotted #ddd; }
+
+        /* إخفاء الأقسام */
+        .page-content { display: none; background: var(--white); padding: 30px; border-radius: 20px; box-shadow: var(--shadow); }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">تطبيقات ذهبية DZ</div>
-        <nav>
-            <ul>
-                <li><a href="#" onclick="showPage('home')">الرئيسية</a></li>
-                <li><a href="#" onclick="showPage('privacy')">سياسة الخصوصية</a></li>
-                <li><a href="#" onclick="showPage('contact')">اتصل بنا</a></li>
-            </ul>
-        </nav>
+        <div class="logo" onclick="showPage('home')" style="cursor:pointer">تطبيقات ذهبية DZ</div>
     </header>
 
-    <main id="home-page" class="container">
-        <div class="grid" id="app-list">
-            </div>
-    </main>
+    <div class="container">
+        <main id="home-page">
+            <div class="grid" id="app-list">
+                </div>
+        </main>
 
-    <div id="privacy-page" class="container page-content">
-        <h2>سياسة الخصوصية</h2>
-        <p>هنا تضع نص سياسة الخصوصية الخاص بموقعك...</p>
-    </div>
+        <section id="redirect-container">
+            <img id="redir-img" src="" alt="" style="width: 100px; border-radius: 22px;">
+            <h2 id="redir-name" style="margin-top:15px;"></h2>
+            <div class="loader-ring"></div>
+            <p class="waiting-text">جاري تحضير رابط التحميل المباشر...</p>
+            <div class="timer-box" id="countdown">15</div>
+            <p style="color:#999;">يرجى عدم إغلاق الصفحة لضمان نجاح التحميل</p>
+        </section>
 
-    <div id="contact-page" class="container page-content">
-        <h2>اتصل بنا</h2>
-        <p>يمكنك التواصل معنا عبر البريد الإلكتروني أو وسائل التواصل الاجتماعي.</p>
-    </div>
-
-    <div id="redirect-page">
-        <img id="redir-img" src="" alt="App Icon">
-        <h2 id="redir-name">اسم التطبيق</h2>
-        <p>الرجاء الانتظار إلى غاية تحضير الرابط المباشر...</p>
-        <div class="timer" id="countdown">15</div>
-        <p>سيتم تحويلك تلقائياً</p>
+        <div id="privacy-page" class="page-content">
+            <h2>سياسة الخصوصية</h2>
+            <p>محتوى سياسة الخصوصية يوضع هنا...</p>
+        </div>
+        <div id="contact-page" class="page-content">
+            <h2>اتصل بنا</h2>
+            <p>تواصل معنا عبر منصات التواصل الاجتماعي الموضحة أدناه.</p>
+        </div>
     </div>
 
     <footer>
+        <nav class="footer-nav">
+            <a href="#" onclick="showPage('home')">الرئيسية</a>
+            <a href="#" onclick="showPage('privacy')">سياسة الخصوصية</a>
+            <a href="#" onclick="showPage('contact')">اتصل بنا</a>
+        </nav>
         <div class="social-icons">
             <a href="#"><i class="fab fa-telegram"></i></a>
             <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#" title="Tik1"><i class="fab fa-tiktok tiktok-icon"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
         </div>
         <div class="footer-rights">
             All rights reserved Osama 40 / 2026
@@ -102,58 +128,59 @@
     </footer>
 
     <script>
-        // بيانات التطبيقات - يمكنك تعديلها بسهولة من هنا
+        // ملاحظة: استبدل روابط الصور (img) بروابط حقيقية من موقعك لتظهر
         const apps = [
-            { id: 1, name: "واتساب الذهبي", img: "https://via.placeholder.com/80/FFD700", link: "https://mediafire.com/example1" },
-            { id: 2, name: "تويتر الذهبي", img: "https://via.placeholder.com/80/1DA1F2", link: "https://mediafire.com/example2" },
-            { id: 3, name: "انستقرام برو", img: "https://via.placeholder.com/80/E1306C", link: "https://mediafire.com/example3" },
-            { id: 4, name: "تيك توك بلس", img: "https://via.placeholder.com/80/000000", link: "https://mediafire.com/example4" },
-            { id: 5, name: "يوتيوب فينسد", img: "https://via.placeholder.com/80/FF0000", link: "https://mediafire.com/example5" },
-            { id: 6, name: "تلجرام المميز", img: "https://via.placeholder.com/80/0088cc", link: "https://mediafire.com/example6" },
-            { id: 7, name: "فيسبوك لايت معدل", img: "https://via.placeholder.com/80/4267B2", link: "https://mediafire.com/example7" },
-            { id: 8, name: "متجر تطبيقات ذهبي", img: "https://via.placeholder.com/80/34A853", link: "https://mediafire.com/example8" }
+            { name: "واتساب الذهبي", img: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg", link: "https://www.mediafire.com" },
+            { name: "تويتر الذهبي", img: "https://abs.twimg.com/favicons/twitter.2.ico", link: "https://www.mediafire.com" },
+            { name: "انستقرام برو", img: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg", link: "#" },
+            { name: "تيك توك بلس", img: "https://v16-webapp.tiktok.com/favicon.ico", link: "#" },
+            { name: "يوتيوب فينسد", img: "https://www.youtube.com/s/desktop/28ea6185/img/favicon_144x144.png", link: "#" },
+            { name: "تلجرام المميز", img: "https://telegram.org/favicon.ico", link: "#" },
+            { name: "فيسبوك لايت", img: "https://facebook.com/favicon.ico", link: "#" },
+            { name: "متجر ذهبي", img: "https://via.placeholder.com/100/34A853/FFFFFF?text=Store", link: "#" }
         ];
 
-        // عرض التطبيقات في الصفحة
-        const appList = document.getElementById('app-list');
-        apps.forEach(app => {
-            appList.innerHTML += `
+        function renderApps() {
+            const appList = document.getElementById('app-list');
+            appList.innerHTML = apps.map(app => `
                 <div class="app-card">
-                    <img src="${app.img}" alt="${app.name}">
+                    <img src="${app.img}" alt="${app.name}" onerror="this.src='https://via.placeholder.com/85?text=App'">
                     <h3>${app.name}</h3>
                     <a href="javascript:void(0)" class="btn-download" onclick="startRedirect('${app.name}', '${app.img}', '${app.link}')">تحميل الآن</a>
                 </div>
-            `;
-        });
-
-        // وظيفة التنقل بين الصفحات
-        function showPage(pageId) {
-            document.querySelectorAll('.container, .page-content').forEach(p => p.style.display = 'none');
-            document.getElementById('home-page').style.display = 'none';
-            
-            if(pageId === 'home') document.getElementById('home-page').style.display = 'block';
-            else document.getElementById(pageId + '-page').style.display = 'block';
+            `).join('');
         }
 
-        // وظيفة العداد وإعادة التوجيه
+        function showPage(pageId) {
+            document.querySelectorAll('#home-page, #redirect-container, .page-content').forEach(el => el.style.display = 'none');
+            if(pageId === 'home') document.getElementById('home-page').style.display = 'block';
+            else document.getElementById(pageId + '-page').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
         function startRedirect(name, img, link) {
-            const redirPage = document.getElementById('redirect-page');
+            document.querySelectorAll('#home-page, .page-content').forEach(el => el.style.display = 'none');
+            const redirContainer = document.getElementById('redirect-container');
             const countdownEl = document.getElementById('countdown');
+            
             document.getElementById('redir-img').src = img;
             document.getElementById('redir-name').innerText = name;
+            redirContainer.style.display = 'block';
             
-            redirPage.style.display = 'block';
             let timeLeft = 15;
+            countdownEl.innerText = timeLeft;
             
             const timer = setInterval(() => {
                 timeLeft--;
                 countdownEl.innerText = timeLeft;
                 if(timeLeft <= 0) {
                     clearInterval(timer);
-                    window.location.href = link; // التحويل للرابط
+                    window.location.href = link; 
                 }
             }, 1000);
         }
+
+        renderApps();
     </script>
 </body>
 </html>
