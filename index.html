@@ -7,65 +7,53 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #007bff; 
-            --bg-color: #f4f7f6;
-            --white: #ffffff;
-            --shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
+        :root { --primary: #007bff; --bg: #f4f7f6; --white: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-color); color: #333; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg); color: #333; }
 
-        header { background: var(--white); padding: 15px; text-align: center; box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); cursor: pointer; }
+        header { background: var(--white); padding: 15px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 1.8rem; font-weight: bold; color: var(--primary); cursor: pointer; }
 
-        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; min-height: 70vh; }
+        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; min-height: 80vh; }
 
-        /* قسم قد يعجبك - توزيع أفقي (مربعين بجنب بعض) */
-        .suggestion-section { background: var(--white); padding: 20px; border-radius: 15px; margin-top: 30px; box-shadow: var(--shadow); }
-        .suggestion-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .suggestion-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; /* هذا يجعلها مربعين بجانب بعض */
-            gap: 15px; 
+        /* الأقسام (مخفية افتراضياً) */
+        .page { display: none; animation: fadeIn 0.3s ease; }
+        .active { display: block; }
+
+        /* شكل البطاقات في الرئيسية وقسم "قد يعجبك" */
+        .suggestion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .app-item { 
+            display: flex; align-items: center; gap: 12px; padding: 12px; 
+            background: var(--white); border-radius: 12px; cursor: pointer;
+            border: 1px solid #eee; transition: 0.2s;
         }
-        .suggest-item { 
-            display: flex; align-items: center; gap: 10px; padding: 10px; 
-            border: 1px solid #f0f0f0; border-radius: 12px; transition: 0.3s; cursor: pointer; 
-        }
-        .suggest-item:hover { background: #f9f9f9; border-color: var(--primary-color); }
-        .suggest-item img { width: 50px; height: 50px; border-radius: 10px; }
-        .suggest-info h4 { font-size: 0.9rem; color: #333; }
-        .suggest-info span { font-size: 0.75rem; color: #999; }
+        .app-item:hover { border-color: var(--primary); background: #f0f7ff; }
+        .app-item img { width: 55px; height: 55px; border-radius: 12px; }
+        .app-item h4 { font-size: 0.9rem; margin-bottom: 3px; }
+        .app-item span { font-size: 0.75rem; color: #888; }
 
-        /* عرض المقال */
-        #article-page { display: none; background: var(--white); padding: 25px; border-radius: 20px; box-shadow: var(--shadow); animation: fadeIn 0.4s; }
-        .article-content img { width: 100px; border-radius: 20px; display: block; margin: 0 auto 20px; }
-        .article-body { margin: 20px 0; line-height: 1.8; color: #555; }
-        .btn-to-download { 
-            display: block; background: var(--primary-color); color: white; text-align: center; 
-            padding: 15px; border-radius: 50px; font-weight: bold; text-decoration: none; margin-top: 30px; 
+        /* صفحة المقال */
+        .article-card { background: var(--white); padding: 30px; border-radius: 20px; text-align: center; }
+        .article-card img { width: 100px; border-radius: 20px; margin-bottom: 20px; }
+        .article-text { text-align: right; line-height: 1.8; color: #555; margin: 20px 0; }
+        .btn-download-trigger { 
+            display: block; background: var(--primary); color: white; padding: 15px; 
+            border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 20px;
         }
 
-        /* صفحة التوجيه */
-        #redirect-container { display: none; text-align: center; background: var(--white); padding: 50px 20px; border-radius: 25px; box-shadow: var(--shadow); }
-        .timer-box { font-size: 3.5rem; font-weight: bold; color: var(--primary-color); margin: 20px 0; }
+        /* صفحة العداد */
+        .timer-screen { text-align: center; padding: 50px 20px; background: white; border-radius: 20px; }
+        .timer-num { font-size: 4rem; font-weight: bold; color: var(--primary); margin: 20px 0; }
 
-        /* التذييل والأيقونات المحسنة */
+        /* التذييل والأيقونات */
         footer { background: var(--white); padding: 40px 0; text-align: center; border-top: 1px solid #eee; margin-top: 50px; }
-        .social-icons { display: flex; justify-content: center; gap: 20px; margin-bottom: 25px; }
-        .social-icons a { 
-            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; 
-            border-radius: 50%; color: white; font-size: 1.3rem; transition: 0.3s; 
+        .social-btns { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
+        .social-btns a { 
+            width: 45px; height: 45px; border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; color: white; font-size: 1.2rem; 
         }
-        .btn-tg { background: #0088cc; }
-        .btn-yt { background: #ff0000; }
-        .btn-tk { background: #000000; }
-        .social-icons a:hover { transform: translateY(-5px); opacity: 0.8; }
-
-        .footer-nav a { margin: 0 10px; text-decoration: none; color: #666; font-size: 0.9rem; font-weight: bold; }
-        .footer-rights { font-size: 0.8rem; color: #bbb; margin-top: 20px; }
+        .tg { background: #0088cc; } .yt { background: #ff0000; } .tk { background: #000; }
+        .footer-links a { margin: 0 10px; text-decoration: none; color: #666; font-weight: bold; font-size: 0.85rem; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @media (max-width: 500px) { .suggestion-grid { grid-template-columns: 1fr; } }
@@ -73,86 +61,77 @@
 </head>
 <body>
 
-    <header><div class="logo" onclick="showPage('home')">تطبيقات ذهبية DZ</div></header>
+    <header><div class="logo" onclick="navigateTo('home')">تطبيقات ذهبية DZ</div></header>
 
     <div class="container">
-        <main id="home-page">
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;" id="main-grid"></div>
-            
-            <section class="suggestion-section">
-                <div class="suggestion-header">
-                    <h2>قد يعجبك</h2>
-                    <a href="#" style="color:var(--primary-color); text-decoration:none; font-size:0.8rem;">المزيد ></a>
-                </div>
-                <div class="suggestion-grid" id="suggestion-list"></div>
-            </section>
-        </main>
+        <div id="home" class="page active">
+            <h3 style="margin-bottom:15px;">قد يعجبك أيضاً</h3>
+            <div class="suggestion-grid" id="main-list"></div>
+        </div>
 
-        <article id="article-page">
-            <div class="article-content">
+        <div id="article" class="page">
+            <div class="article-card">
                 <img id="art-img" src="" alt="">
-                <h1 id="art-title" style="text-align:center;"></h1>
-                <div class="article-body">
-                    <p>يعتبر هذا التطبيق من أفضل النسخ المعدلة التي توفر ميزات حصرية للمستخدمين. يتميز بواجهة سهلة الاستخدام ودعم كامل للغة العربية، بالإضافة إلى إمكانية تخصيص الثيمات والخصوصية بشكل كامل.</p>
-                    <ul style="margin-top:15px; padding-right:20px;">
-                        <li>تحديثات دورية ومستقرة.</li>
-                        <li>حماية ضد الحظر.</li>
-                        <li>إمكانية تحميل الفيديوهات والصور بجودة عالية.</li>
-                    </ul>
+                <h1 id="art-title"></h1>
+                <div class="article-text">
+                    <p>هذا التطبيق هو الخيار الأمثل للمستخدمين الذين يبحثون عن تجربة فريدة ومميزات معدلة غير موجودة في النسخ الرسمية. نوفر لك الرابط المباشر مع شرح كامل للمميزات والتحسينات الأخيرة.</p>
                 </div>
-                <a href="javascript:void(0)" class="btn-to-download" id="go-to-dl-btn">انتقل إلى صفحة التحميل المباشر</a>
+                <button class="btn-download-trigger" onclick="startTimer()">انتقل إلى صفحة التحميل (15 ثانية)</button>
             </div>
-        </article>
+        </div>
 
-        <section id="redirect-container">
-            <h2 id="redir-name"></h2>
-            <p>يرجى الانتظار، جاري فحص الرابط...</p>
-            <div class="timer-box" id="countdown">15</div>
-            <p style="color:#999;">تجهيز الملف للتحميل المباشر</p>
-        </section>
+        <div id="redirect" class="page">
+            <div class="timer-screen">
+                <h2 id="redir-app-name">جاري تجهيز الرابط...</h2>
+                <div class="timer-num" id="count-num">15</div>
+                <p>يرجى الانتظار، لا تغلق الصفحة لضمان نجاح التحميل.</p>
+            </div>
+        </div>
     </div>
 
     <footer>
-        <div class="social-icons">
-            <a href="#" class="btn-tg"><i class="fab fa-telegram-plane"></i></a>
-            <a href="#" class="btn-yt"><i class="fab fa-youtube"></i></a>
-            <a href="#" class="btn-tk"><i class="fab fa-tiktok"></i></a>
+        <div class="social-btns">
+            <a href="#" class="tg"><i class="fab fa-telegram-plane"></i></a>
+            <a href="#" class="yt"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="tk"><i class="fab fa-tiktok"></i></a>
         </div>
-        <nav class="footer-nav">
-            <a href="#" onclick="showPage('home')">الرئيسية</a>
-            <a href="#" onclick="showPage('privacy')">سياسة الخصوصية</a>
-            <a href="#" onclick="showPage('contact')">اتصل بنا</a>
-        </nav>
-        <div class="footer-rights">All rights reserved Osama 40 / 2026</div>
+        <div class="footer-links">
+            <a href="#" onclick="navigateTo('home')">الرئيسية</a>
+            <a href="#">سياسة الخصوصية</a>
+            <a href="#">اتصل بنا</a>
+        </div>
+        <p style="margin-top:20px; color:#bbb; font-size:0.7rem;">All rights reserved Osama 40 / 2026</p>
     </footer>
 
     <script>
-        const apps = [
+        // بيانات التطبيقات
+        const appsData = [
             { name: "واتساب الذهبي", img: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg", author: "ابو عرب" },
             { name: "تويتر الذهبي", img: "https://abs.twimg.com/favicons/twitter.2.ico", author: "ابو عرب" },
-            { name: "انستقرام برو", img: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg", author: "ابو عرب" },
             { name: "تيك توك بلس", img: "https://v16-webapp.tiktok.com/favicon.ico", author: "Tik1" },
             { name: "يوتيوب فينسد", img: "https://www.youtube.com/s/desktop/28ea6185/img/favicon_144x144.png", author: "يوتيوب" },
             { name: "تلجرام المميز", img: "https://telegram.org/favicon.ico", author: "ابو عرب" },
-            { name: "سناب بلس", img: "https://via.placeholder.com/60", author: "ابو عرب" },
-            { name: "واتساب الازرق", img: "https://via.placeholder.com/60", author: "تطبيقات" }
+            { name: "انستقرام برو", img: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg", author: "ابو عرب" },
+            { name: "سناب شات", img: "https://via.placeholder.com/60", author: "ابو عرب" },
+            { name: "فيسبوك لايت", img: "https://facebook.com/favicon.ico", author: "تطبيقات" }
         ];
 
-        function init() {
-            const mainGrid = document.getElementById('main-grid');
-            mainGrid.innerHTML = apps.slice(0, 4).map(app => `
-                <div class="suggest-item" style="flex-direction:column; text-align:center; padding:20px;" onclick="openArticle('${app.name}', '${app.img}')">
-                    <img src="${app.img}" style="width:70px; height:70px; margin-bottom:10px;">
-                    <h4>${app.name}</h4>
-                    <span style="background:var(--primary-color); color:white; padding:3px 10px; border-radius:10px; font-size:0.7rem; margin-top:10px;">عرض المقال</span>
-                </div>
-            `).join('');
+        let selectedApp = "";
 
-            const suggestionList = document.getElementById('suggestion-list');
-            suggestionList.innerHTML = apps.map(app => `
-                <div class="suggest-item" onclick="openArticle('${app.name}', '${app.img}')">
-                    <img src="${app.img}" alt="${app.name}">
-                    <div class="suggest-info">
+        // وظيفة التنقل بين الصفحات
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        // إنشاء القائمة في الرئيسية
+        function buildHome() {
+            const list = document.getElementById('main-list');
+            list.innerHTML = appsData.map(app => `
+                <div class="app-item" onclick="openArticle('${app.name}', '${app.img}')">
+                    <img src="${app.img}" alt="${app.name}" onerror="this.src='https://via.placeholder.com/60'">
+                    <div class="app-info">
                         <h4>${app.name}</h4>
                         <span>${app.author}</span>
                     </div>
@@ -160,35 +139,33 @@
             `).join('');
         }
 
-        function showPage(pageId) {
-            document.querySelectorAll('#home-page, #article-page, #redirect-container').forEach(el => el.style.display = 'none');
-            document.getElementById(pageId + '-page').style.display = 'block';
-            window.scrollTo(0,0);
-        }
-
+        // فتح المقال
         function openArticle(name, img) {
-            showPage('article');
+            selectedApp = name;
             document.getElementById('art-title').innerText = name;
             document.getElementById('art-img').src = img;
-            document.getElementById('go-to-dl-btn').onclick = () => startDownload(name);
+            navigateTo('article');
         }
 
-        function startDownload(name) {
-            showPage('redirect');
-            document.getElementById('redir-name').innerText = "تحميل " + name;
-            let timeLeft = 15;
-            const timer = setInterval(() => {
-                timeLeft--;
-                document.getElementById('countdown').innerText = timeLeft;
-                if(timeLeft <= 0) {
-                    clearInterval(timer);
-                    alert("الآن يتم توجيهك لرابط Mediafire المباشر...");
-                    showPage('home');
+        // بدء العداد
+        function startTimer() {
+            navigateTo('redirect');
+            document.getElementById('redir-app-name').innerText = "تحميل " + selectedApp;
+            let time = 15;
+            const clock = setInterval(() => {
+                time--;
+                document.getElementById('count-num').innerText = time;
+                if(time <= 0) {
+                    clearInterval(clock);
+                    alert("الآن سيتم توجيهك لرابط التحميل المباشر!");
+                    navigateTo('home');
+                    document.getElementById('count-num').innerText = 15;
                 }
             }, 1000);
         }
 
-        init();
+        // تشغيل الموقع عند التحميل
+        buildHome();
     </script>
 </body>
 </html>
